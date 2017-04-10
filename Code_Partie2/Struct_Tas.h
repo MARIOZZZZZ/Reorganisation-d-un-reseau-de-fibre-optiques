@@ -3,19 +3,34 @@
 
 #define CAPACITE_MAX 100000
 
-typedef struct{
+typedef struct
+{
     int i;
     double c;
 } Element;
 
-typedef struct{
+typedef struct
+{
     int n;
-    Element *tab[CAPACITE_MAX + 1];
-} Tas;
+    Element *H[CAPACITE_MAX];
+    int A[CAPACITE_MAX];
+} Tas2Clefs;
 
-Element *min(Tas *t);
-Element *insert(Tas *t, Element *e);
-void suppMin(Tas *t);
-int exist(Tas *t, int i);
-    
+/* Fonctions de manipulation du tas */
+Element *min(Tas2Clefs *t);
+Element *insert(Tas2Clefs *t, int i, double c);
+void suppMin(Tas2Clefs *t);
+int estPresenter(Tas2Clefs *t, int i);
+void suppElemt(Tas2Clefs *t, int i);
+
+/* Fonctions du tas */
+void echanger(Tas2Clefs *t, int i, int j);
+void monter(Tas2Clefs *t, int i);
+void descendre(Tas2clefs *t, int i);
+int plusPetitFils(Tas2clefs *t, int i);
+int racine();
+int hasPere(int i);
+int filsGauche(int i);
+int filsDroit(int i);
+int pere(int i);
 #endif
