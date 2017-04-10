@@ -33,4 +33,4 @@
 *.su
 
 # Google Drive files
-desktop.ini
+*.ini
