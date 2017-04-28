@@ -6,8 +6,8 @@ entree_sortie.o: entree_sortie.c entree_sortie.h
 SVGwriter.o: SVGwriter.c SVGwriter.h
 	gcc -c SVGwriter.c
 
-MainGraphe: MainGraphe.o Graphe.o entree_sortie.o SVGwriter.o Struct_File.o Struct_Liste.o evaluation_NChaines.o
-	gcc -Wall -O -o MainGraphe MainGraphe.o Graphe.o entree_sortie.o SVGwriter.o Struct_File.o Struct_Liste.o evaluation_NChaines.o -lm 
+MainGraphe: MainGraphe.o Graphe.o entree_sortie.o SVGwriter.o Struct_File.o Struct_Liste.o evaluation_NChaines.o Dijkstra.o Struct_Tas.o
+	gcc -Wall -O -o MainGraphe MainGraphe.o Graphe.o entree_sortie.o SVGwriter.o Struct_File.o Struct_Liste.o evaluation_NChaines.o Dijkstra.o Struct_Tas.o -lm 
 
 MainGraphe.o: MainGraphe.c Graphe.h
 	gcc -c MainGraphe.c
@@ -24,6 +24,11 @@ Struct_Liste.o: Struct_Liste.c Struct_Liste.h
 evaluation_NChaines.o: evaluation_NChaines.c evaluation_NChaines.h
 	gcc -c evaluation_NChaines.c
 
+Dijkstra.o: Dijkstra.c Dijkstra.h Graphe.h Struct_Tas.h
+	gcc -c Dijkstra.c
+
+Struct_Tas.o: Struct_Tas.c Struct_Tas.h
+	gcc -c Struct_Tas.c
 
 clean: 
 	rm -fr MainGraphe  *.o

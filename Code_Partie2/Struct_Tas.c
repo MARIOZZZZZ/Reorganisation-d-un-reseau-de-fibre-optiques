@@ -21,7 +21,7 @@ void insert(Tas2Clefs *t, int i, double c){
 void suppMin(Tas2Clefs *t){
     echanger(t, t->n, racine());
     t->n--;
-    decendre(t, racine());
+    descendre(t, racine());
 }
 
 int estPresenter(Tas2Clefs *t, int i){
@@ -33,7 +33,7 @@ void suppElemt(Tas2Clefs *t, int i){
     if(estPresenter(t, i) == 0) return;
     echanger(t, t->n, t->A[i]);
     t->n--;
-    decendre(t, racine());
+    descendre(t, racine());
 }
 
 void echanger(Tas2Clefs *t, int i, int j){
@@ -55,7 +55,7 @@ void monter(Tas2Clefs *t, int i){
     }
 }
 
-void descendre(Tas2clefs *t, int i){
+void descendre(Tas2Clefs *t, int i){
     if(!(filsGauche(i) <= t->n)) return;
 
     int fiston = plusPetitFils(t, i);
@@ -65,7 +65,7 @@ void descendre(Tas2clefs *t, int i){
     }
 }
 
-int plusPetitFils(Tas2clefs *t, int i){
+int plusPetitFils(Tas2Clefs *t, int i){
     if(!(filsDroit(i) <= t->n)) return filsGauche(i);
 
     int fg = filsGauche(i);

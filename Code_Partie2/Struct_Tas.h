@@ -26,8 +26,8 @@ void suppElemt(Tas2Clefs *t, int i);
 /* Fonctions du tas */
 void echanger(Tas2Clefs *t, int i, int j);
 void monter(Tas2Clefs *t, int i);
-void descendre(Tas2clefs *t, int i);
-int plusPetitFils(Tas2clefs *t, int i);
+void descendre(Tas2Clefs *t, int i);
+int plusPetitFils(Tas2Clefs *t, int i);
 int racine();
 int hasPere(int i);
 int filsGauche(int i);

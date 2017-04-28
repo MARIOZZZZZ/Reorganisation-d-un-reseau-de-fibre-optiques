@@ -16,6 +16,7 @@ void ajout_voisin(Graphe* G, int u, int v){
   pa->u=u;
   pa->v=v;
   pa->longueur=sqrt( (G->T_som[u]->x - G->T_som[v]->x)*(G->T_som[u]->x - G->T_som[v]->x) + (G->T_som[u]->y - G->T_som[v]->y)*(G->T_som[u]->y - G->T_som[v]->y));
+  pa->calc_gamma = 0;
 
   pca=(Cellule_arete*) malloc(sizeof(Cellule_arete));
   pca->a=pa;
@@ -29,15 +30,18 @@ void ajout_voisin(Graphe* G, int u, int v){
 
 }
 
-Arete* acces_arete(Graphe* G, int u, int v){
+Arete *acces_arete(Graphe *G, int u, int v)
+{
   Cellule_arete *coura;
 
-  coura=G->T_som[u]->L_voisin;
-  while ( (coura!=NULL)&&(coura->a->u!=v)&&(coura->a->v!=v))
-    coura=coura->suiv;
+  coura = G->T_som[u]->L_voisin;
+  while ((coura != NULL) && (coura->a->u != v) && (coura->a->v != v))
+    coura = coura->suiv;
 
-  if (coura==NULL) return NULL;
-            else  return coura->a;
+  if (coura == NULL)
+    return NULL;
+  else
+    return coura->a;
 }
 
 void lecture_graphe(Graphe *G, FILE * f){
