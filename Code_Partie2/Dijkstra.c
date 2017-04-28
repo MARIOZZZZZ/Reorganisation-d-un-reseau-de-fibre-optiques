@@ -2,16 +2,18 @@
 #include <stdlib.h>
 #include "Dijkstra.h"
 
-#define IN 9999999999  /* Infinie */
+#define IN 9999999999 /* Infinie */
 
-Solu_dij* dijkstra(Graphe *g, int r, int t){
+Solu_dij *dijkstra(Graphe *g, int r, int t)
+{
     Tas2Clefs *bord;
     int pred[g->nbsom], marque[g->nbsom], chemin[g->nbsom];
     double dist[g->nbsom];
     int start, i;
     Cellule_arete *cour;
+    Solu_dij *Resultat;
 
-    for(i=1; i<=g->nbsom; i++)
+    for (i = 1; i <= g->nbsom; i++)
     {
         dist[i] = IN;
         pred[i] = -1;
@@ -20,10 +22,11 @@ Solu_dij* dijkstra(Graphe *g, int r, int t){
     }
 
     bord = malloc(sizeof(Tas2Clefs));
-    if(!bord) exit(0);
+    if (!bord)
+        exit(0);
 
     dist[r] = 0;
-    insert(bord, r, 0);     /* Ajouter r a distance 0 dans Bordure */
+    insert(bord, r, 0); /* Ajouter r a distance 0 dans Bordure */
     marque[r] = 1;
 
     while (bord->n != 0)
@@ -31,22 +34,23 @@ Solu_dij* dijkstra(Graphe *g, int r, int t){
         start = min(bord);
         suppMin(bord);
         marque[start] = 1;
-       ///////////////////////////////////////////////////////////////////////////////
-       /* Mettre a jour du Bordure */
-       cour = g->T_som[start]->L_voisin;
-       while(cour){
-           if (marque[cour->a->v] == 0)
-           {
-               if (dist[cour->a->v] > (dist[start] + cour->a->longueur))
-               {
-                   dist[cour->a->v] = (dist[start] + cour->a->longueur);
-                   pred[cour->a->v] = start;
-                   insert(bord, cour->a->v, dist[cour->a->v]);
-               }
-           }
-           cour = cour->suiv;
-       }
-       ///////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////
+        /* Mettre a jour du Bordure */
+        cour = g->T_som[start]->L_voisin;
+        while (cour)
+        {
+            if (marque[cour->a->v] == 0)
+            {
+                if (dist[cour->a->v] > (dist[start] + cour->a->longueur))
+                {
+                    dist[cour->a->v] = (dist[start] + cour->a->longueur);
+                    pred[cour->a->v] = start;
+                    insert(bord, cour->a->v, dist[cour->a->v]);
+                }
+            }
+            cour = cour->suiv;
+        }
+        ///////////////////////////////////////////////////////////////////////////////
     }
 
     start = t;
@@ -68,4 +72,4 @@ Solu_dij* dijkstra(Graphe *g, int r, int t){
     Resultat->path = chemin;
 
     return Resultat;
- }
+}
