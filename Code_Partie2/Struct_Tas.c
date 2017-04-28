@@ -6,7 +6,7 @@ Element *min(Tas2Clefs *t){
     return t->H[racine()];
 }
 
-Element *insert(Tas2Clefs *t, int i, double c){
+void insert(Tas2Clefs *t, int i, double c){
     Element *nE = malloc(sizeof(Element));
     if(!nE) exit(0);
 

@@ -18,7 +18,7 @@ typedef struct
 
 /* Fonctions de manipulation du tas */
 Element *min(Tas2Clefs *t);
-Element *insert(Tas2Clefs *t, int i, double c);
+void insert(Tas2Clefs *t, int i, double c);
 void suppMin(Tas2Clefs *t);
 int estPresenter(Tas2Clefs *t, int i);
 void suppElemt(Tas2Clefs *t, int i);
