@@ -113,7 +113,7 @@ int main(int argc, char *argv[])
 					duration = (finish - start);
 
 					tmpsCalc = fopen(strcat(repoR, "Liste"), "a+");
-					fprintf(tmpsCalc, "%s:   %.2f %d\n", ptr->d_name, duration, nbPoints);
+					fprintf(tmpsCalc, " %d  %.2f    %s\n", nbPoints, duration, ptr->d_name);
 
 					fclose(tmpsCalc);
 
@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 					duration = (finish - start);
 
 					tmpsCalc = fopen(strcat(repoR, "Hachage"), "a+");
-					fprintf(tmpsCalc, "%s:   %.2f %d\n", ptr->d_name, duration, nbPoints);
+					fprintf(tmpsCalc, " %d  %.2f    %s\n", nbPoints, duration, ptr->d_name);
 
 					fclose(tmpsCalc);
 
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
 					duration = (finish - start);
 
 					tmpsCalc = fopen(strcat(repoR, "Arbre"), "a+");
-					fprintf(tmpsCalc, "%s:   %.2f %d\n", ptr->d_name, duration, nbPoints);
+					fprintf(tmpsCalc, " %d  %.2f    %s\n", nbPoints, duration, ptr->d_name);
 
 					fclose(tmpsCalc);
 

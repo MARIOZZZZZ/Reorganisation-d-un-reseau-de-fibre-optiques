@@ -8,7 +8,7 @@
 
 int main(int argc,char**argv){
 
-  char filename[104],filenameres[104],filenamencha[104];;
+  char filename[104],filenameres[104],filenamencha[104],filenameresComplet[104] = "Instances_res/";
   int chmeth, gamma = 0;
   double longueur, eval;
   Path *tabp;
@@ -24,9 +24,10 @@ int main(int argc,char**argv){
   strcpy(filenameres,argv[1]);
   strcpy(filenamencha,argv[1]);
   strcat(filenameres,".res");
+  strcat(filenameresComplet, filenameres);
   strcat(filenamencha,".ncha");
 
-  FILE *f=fopen(filenameres,"r");
+  FILE *f=fopen(filenameresComplet,"r");
 
   if (f==NULL){
     printf("Probleme lecture du fichier %s\n",filenameres);
@@ -61,7 +62,7 @@ int main(int argc,char**argv){
   gamma = rechercherGamma(&G, tabp);
   eval = evaluation_NChaines(gamma, longueur, argv[1]);
   
-  printf("Instance = %s, Evaluation = %.2f, gamma = %d, distance = %.2f\n", argv[1], eval, gamma, longueur);
+  printf("Instance = %s, Evaluation = %.2f, gamma = %d, distance = %.2f\n", filename, eval, gamma, longueur);
 
   return 0;
 }

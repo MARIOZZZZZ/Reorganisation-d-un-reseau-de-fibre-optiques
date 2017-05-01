@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "parcour_en_largeur.h"
+#include "Parcour_en_largeur.h"
 #include "Struct_File.h"
 
 int maxE(int a, int b){
