@@ -11,6 +11,7 @@ int main(int argc,char**argv){
   char filename[104],filenameres[104],filenamencha[104];;
   int chmeth, gamma = 0;
   double longueur, eval;
+  Path *tabp;
 
   if(argc!=3){
     printf("usage: %s <file> <numeromethod>\n",argv[0]);
@@ -41,17 +42,26 @@ int main(int argc,char**argv){
   afficheGrapheSVG(&G,filename);
 
   FILE *f2 = fopen(filenamencha, "w+");
+ 
+  /* Selection de l'algorithme de recherche */
+  if(chmeth == 1){
+    tabp = touverDesChaines(&G);
+  }else if(chmeth == 2){
+    tabp = Application_Du_Dij(&G);
+  }else{
+    printf("Algo inconnu, numeromethode = 1 if using Width firs search; 2 if using algorithme dijkstra\n");
+    exit(0);
+  }
 
-  longueur = Application_Du_Dij(&G, &gamma, f2);
-
-  printf("\n longueur = %.2f", longueur);
-  printf("gamma = %d\n", gamma);
-
-  fclose(f2);
   
-  eval = evaluation_NChaines(gamma, longueur, "07397_pla");
-  printf("Evaluation = %.2f\n", eval);
+  ecrireNch(&G, tabp, f2);  
+  fclose(f2);
 
+  longueur = distanceTotale(&G, tabp);
+  gamma = rechercherGamma(&G, tabp);
+  eval = evaluation_NChaines(gamma, longueur, argv[1]);
+  
+  printf("Instance = %s, Evaluation = %.2f, gamma = %d, distance = %.2f\n", argv[1], eval, gamma, longueur);
 
   return 0;
 }

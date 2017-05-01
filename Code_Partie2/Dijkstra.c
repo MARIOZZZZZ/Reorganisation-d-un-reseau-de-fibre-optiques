@@ -1,35 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Dijkstra.h"
+#include "Struct_Tas.h"
+#include "Parcour_en_largeur.h"
 
-#define IN 999999999 /* Infinie */
+#define IN 9999999999 /* Infinie */
 
-int maxE(int a, int b){
-  if (a>b) return a;
-  return b;
-}
-
-Solu_dij *dijkstra(Graphe *g, int r, int t, int *gamma)
+Path dijkstra(Graphe *g, int r, int t)
 {
     Tas2Clefs *bord;
-    int pred[g->nbsom], marque[g->nbsom], chemin[g->nbsom];
-    double dist[g->nbsom];
-    int start, i, j, ext, gmax = *gamma;
+    int pred[g->nbsom+1], marque[g->nbsom+1];
+    double dist[g->nbsom+1];
+    int start, i, j, ext;
     Cellule_arete *cour;
     Arete *a;
-    Solu_dij *Resultat;
+    Path p = (ElmntPath*)malloc(sizeof(ElmntPath));
+    Path np;
+    p->s = -1;
+    p->suiv = NULL;
 
     for (i = 1; i <= g->nbsom; i++)
     {
         dist[i] = IN;
         pred[i] = -1;
         marque[i] = 0;
-        chemin[i] = -1;
     }
 
     bord = malloc(sizeof(Tas2Clefs));
-    if (!bord)
+    if (!bord){
+        printf("Ereur de allocation du tas\n");
         exit(0);
+    }
+    bord->n = 0;
+    for(i=0; i<CAPACITE_MAX; i++){
+        bord->H[i] = NULL;
+        bord->A[i] = -1;
+    }
 
     dist[r] = 0;
     insert(bord, r, 0); /* Ajouter r a distance 0 dans Bordure */
@@ -37,6 +43,7 @@ Solu_dij *dijkstra(Graphe *g, int r, int t, int *gamma)
 
     while (bord->n != 0)
     {
+
         start = min(bord)->i;
         suppMin(bord);
         marque[start] = 1;
@@ -65,69 +72,40 @@ Solu_dij *dijkstra(Graphe *g, int r, int t, int *gamma)
     }
 
     start = t;
-    i = 0;
-    if (marque[start] != 0)
-    {
-        while (start != r)
-        {
-            chemin[i] = start;
+    if(marque[t] != 0){
+        while(start != -1){
+            np = malloc(sizeof(ElmntPath));
+            np->s=start;
+            np->suiv = p;
+            p = np;
             start = pred[start];
-            i++;
         }
-        chemin[i] = r;
-
-        Resultat = malloc(sizeof(Solu_dij));
-        Resultat->dist = dist[t];
-        Resultat->path = chemin;
-
-        for(j=0; j<i-1; j++){
-            a = acces_arete(g, chemin[j], chemin[j+1]);
-            if(a!=NULL){
-                a->calc_gamma+=1;
-                gmax = maxE(gmax, a->calc_gamma);
-            }
-        }
-        *gamma = gmax;
-
-       // printf("\n calcgamma = %d\n", *gamma);
-        return Resultat;
+        return p;
     }
-    else
-        return NULL;
+    else return NULL;
+
 }
 
-double Application_Du_Dij(Graphe *g, int *gamma, FILE *f)
+Path *Application_Du_Dij(Graphe *g)
 {
     if (!g)
         exit(0);
 
     int i, j, r, t;
-    double longueur = 0;
-    Solu_dij *resul;
-
+    Path *tabp =malloc(sizeof(ElmntPath*)*(g->nbcommod));
+   
     for (i = 0; i < g->nbcommod; i++)
     {
+
         r = g->T_commod[i].e1;
         t = g->T_commod[i].e2;
-        resul = dijkstra(g, r, t, gamma);
-        if (!resul)
+        tabp[i] = dijkstra(g, r, t);
+        if (!tabp[i])
         {
             printf("Il n'existe pas une chaine relieant la commodite %d->%d, une erreur se produite dans la fonction dijkstra!!!!!\n", r, t);
             exit(0);
         }
-
-        longueur += resul->dist;
-        
-        /* Generation du fichier .nch */
-        j=0;
-        while(resul->path[j] != -1)
-            j++;
-    
-        for(j=j-1; j>=0; j--){
-            fprintf(f, "%d ", resul->path[j]);
-        }
-        fprintf(f, "-1\n");
     }
 
-    return longueur;
+    return tabp;
 }

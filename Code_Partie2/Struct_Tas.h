@@ -1,7 +1,7 @@
 #ifndef _STRUCT_TAS_H
 #define _STRUCT_TAS_H
 
-#define CAPACITE_MAX 100000
+#define CAPACITE_MAX 10000
 
 typedef struct
 {

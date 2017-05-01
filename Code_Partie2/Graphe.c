@@ -16,7 +16,10 @@ void ajout_voisin(Graphe* G, int u, int v){
   pa->u=u;
   pa->v=v;
   pa->longueur=sqrt( (G->T_som[u]->x - G->T_som[v]->x)*(G->T_som[u]->x - G->T_som[v]->x) + (G->T_som[u]->y - G->T_som[v]->y)*(G->T_som[u]->y - G->T_som[v]->y));
+
+  /* Initialiser ses donnees calc_gamma pour calculer gamma finale */
   pa->calc_gamma = 0;
+  /*****************************************************************/
 
   pca=(Cellule_arete*) malloc(sizeof(Cellule_arete));
   pca->a=pa;
