@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "parcour_en_largeur.h"
+#include "Parcour_en_largeur.h"
 #include "Struct_File.h"
 
 int maxE(int a, int b){
@@ -20,8 +20,8 @@ Path nbarcmin_entre_r_t(Graphe *g, int r, int t){
      p->suiv = NULL;
 
      for(i=1; i<=g->nbsom; i++){
-         visit[i] = -1;
-         pred[i] = -1;
+         visit[i] = -1;//le tab pour compter le nombre des arretes pour chaque sommet, en sommant depuis r
+         pred[i] = -1;// le sommet pred. du sommet courant
      }
      visit[r] = 0;
      enfile(&F, r);
@@ -32,18 +32,18 @@ Path nbarcmin_entre_r_t(Graphe *g, int r, int t){
 
          while(cour != NULL){
              if(u == cour->a->u){
-                 v = cour->a->v;
-             }else v = cour->a->u;
-             if(visit[v] == -1){
-                 visit[v] = visit[u] + 1;
-                 pred[v] = u;
+                 v = cour->a->v; //le cas ou le vpremier extremite est le voisin, on affaete l'autre extemite a v
+             }else v = cour->a->u;//sinon on reprend l'autre extremite et on affacte a v'
+             if(visit[v] == -1){ //si le voisin qui est v est a -1 dans le tableau visit alors
+                 visit[v] = visit[u] + 1;  //alors on met sur l'indice v dans le tab visit la somme des arretes du sommet precedent + 1 
+                 pred[v] = u; //on met le sommet que lon a depile dans le tab des sommets pred.
                  enfile(&F, v);
              }
              cour = cour->suiv;
          }
      }
      
-     s = t;
+     s = t;//on affecte le chiffre du sommet a s 
      if(visit[t] != -1){
          while(s != -1){
              np = malloc(sizeof(ElmntPath));
@@ -72,7 +72,9 @@ Path *touverDesChaines(Graphe *g){
 
     return tabp;
 }
-
+/*On parcours les commodites
+et on ajoute +1 au gamma d'un sommet 
+que l'on treaverse */
 int rechercherGamma(Graphe *g, Path *tabp)
 {
     int i, gamma = 0;

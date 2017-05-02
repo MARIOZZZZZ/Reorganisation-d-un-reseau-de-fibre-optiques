@@ -8,14 +8,14 @@
 
 int main(int argc,char**argv){
 
-  char filename[104],filenameres[104],filenamencha[104];;
+  char filename[104],filenameres[104],filenamencha[104],filenameresComplet[104] = "Instances_res/";
   int chmeth, gamma = 0;
   double longueur, eval;
   Path *tabp;
 
   if(argc!=3){
     printf("usage: %s <file> <numeromethod>\n",argv[0]);
-    printf("where numeromethode = 1 if using Width firs search; 2 if using algorithme dijkstra\n");
+    printf("where numeromethode = 1 if using Width firs search; 2 if using algorithme dijkstra; 3 if using algorithme A*\n");
     return 1;
   }
 
@@ -24,9 +24,10 @@ int main(int argc,char**argv){
   strcpy(filenameres,argv[1]);
   strcpy(filenamencha,argv[1]);
   strcat(filenameres,".res");
+  strcat(filenameresComplet, filenameres);
   strcat(filenamencha,".ncha");
 
-  FILE *f=fopen(filenameres,"r");
+  FILE *f=fopen(filenameresComplet,"r");
 
   if (f==NULL){
     printf("Probleme lecture du fichier %s\n",filenameres);
@@ -48,8 +49,11 @@ int main(int argc,char**argv){
     tabp = touverDesChaines(&G);
   }else if(chmeth == 2){
     tabp = Application_Du_Dij(&G);
+  }
+  else if(chmeth == 3){
+    tabp = Application_Du_A(&G);
   }else{
-    printf("Algo inconnu, numeromethode = 1 if using Width firs search; 2 if using algorithme dijkstra\n");
+    printf("Algo inconnu, numeromethode = 1 if using Width firs search; 2 if using algorithme dijkstra; 3 if using algorithme A*\n");
     exit(0);
   }
 
@@ -61,7 +65,7 @@ int main(int argc,char**argv){
   gamma = rechercherGamma(&G, tabp);
   eval = evaluation_NChaines(gamma, longueur, argv[1]);
   
-  printf("Instance = %s, Evaluation = %.2f, gamma = %d, distance = %.2f\n", argv[1], eval, gamma, longueur);
+  printf("Instance = %s, Evaluation = %.2f, gamma = %d, distance = %.2f\n", filename, eval, gamma, longueur);
 
   return 0;
 }
