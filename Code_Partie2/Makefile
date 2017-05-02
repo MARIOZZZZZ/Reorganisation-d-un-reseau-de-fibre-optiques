@@ -35,4 +35,4 @@ Struct_Tas.o: Struct_Tas.c Struct_Tas.h
 
 
 clean: 
-	rm -fr MainGraphe.exe MainGraphe  *.o *.html *.ncha
+	rm -fr MainGraphe  *.o
